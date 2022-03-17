@@ -1,3 +1,7 @@
+/**
+ * https://www.zerocho.com/category/JavaScript/post/57babe9f5abe0c17006fe230
+ */
+
 let SenateSystem = (function () {
   function SenateSystem(adapter) {
     this.adapter = adapter;
