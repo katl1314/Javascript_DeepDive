@@ -75,3 +75,4 @@ console.log("vitellius", vitellius);
 
 nero.attack("vindex");
 galba.detray("nero");
+rufus.detray("galba");

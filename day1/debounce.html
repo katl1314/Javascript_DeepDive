@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="a1" />
+    <label id="a2"></label>
+    <script>
+      var Debounce = (function () {
+        let status;
+
+        function init(callback, ms, isDebounce = false) {
+          document.querySelector("#a1").addEventListener("input", function () {
+            if (isDebounce) {
+              // debounce
+              if (status) {
+                status = clearTimeout(status);
+              }
+              status = setTimeout(callback.bind(this), ms);
+            } else {
+              // throttle
+              if (status) {
+                return;
+              }
+              status = setTimeout(
+                function () {
+                  callback.call(this);
+                  status = null;
+                }.bind(this),
+                ms
+              );
+            }
+          });
+        }
+
+        return {
+          setDebounce: function (callback, ms) {
+            init(callback, ms, true);
+          },
+          setThrottle: function (callback, ms) {
+            init(callback, ms);
+          },
+        };
+      })();
+
+      const myFunction = function () {
+        document.querySelector("#a2").textContent = this.value;
+      };
+
+      // Debounce.setDebounce(myFunction, 1000);
+      Debounce.setThrottle(myFunction, 1000);
+    </script>
+  </body>
+</html>
