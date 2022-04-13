@@ -9,7 +9,7 @@
  *
  *
  */
-
+console.log(1);
 class Prefixer {
     constructor(prefix) {
         this.prefix = prefix;
