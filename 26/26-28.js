@@ -27,7 +27,7 @@ class Prefixer {
     add3(arr) {
         return arr.map(function (d) {
             return `${this.prefix}-${d}`;
-        }, this);
+        }, this); // Array.prototype.map함수의 두번째 인자로 this를 함수 내부의 this에 바인딩
     }
 
     add2(arr) {
@@ -44,7 +44,7 @@ console.log(prefixer.add2(["transition", "user-select"])); // -webkit-transition
 console.log(prefixer.add3(["transition", "user-select"])); // -webkit-transition, -webkit-user-select
 
 /**
- * Array.prototype.map(function(){}, thisBinding?); // 고차함수의 경우 기본적으로 thisBinding관련 인자를 콜백함수로 전달 할 수 있음.
+ * Array.prototype.map(function(){}, thisBinding?); // Array.prototype.map의 경우 두번째 인자로 함수 내 this를 바인딩할 객체를 전달할 수 있음.
  * Array.prototype.map(function(){}.bind(this)); // 일반 함수로 호출시 함수 내부에 this를 참조할 경우 전역객체를 가리키므로 bind메서드를 이용하여 this를 바인딩 후 함수를 새로 만듦.
  * Array.prototype.map(() => {console.log(this)}); 스코프 체인상 가장 가까운 일반 함수의 this,  super, arguments, new.target을 참조함.
  */
