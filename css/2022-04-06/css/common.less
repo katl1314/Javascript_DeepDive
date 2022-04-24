@@ -1,0 +1,86 @@
+.header {
+    height: 150px;
+    background-color: blue;
+    .logo {
+        height: 85px;
+        background-color: red;
+        display: flex; /* flex는 부모요소에만 */
+        justify-content: space-between; /* 가로 정렬 */
+        // justify-content: space-around; /* display:flex시 정렬하는 속성 */
+        align-items: center;
+        h1 {
+            background-image: url("../image/logo.png"); // 배경 이미지 설정
+            background-repeat: no-repeat; // 반복을 제어함.
+            display: inline-block;
+            width: 130px;
+            position: relative;
+            top: 8px;
+            a {
+                display: inline-block;
+                width: 130px;
+                height: 36px;
+                font-size: 0px;
+            }
+        }
+        ul {
+            display: flex;
+            // justify-content: space-around;
+            li {
+                margin-right: 10px;
+            }
+        }
+    }
+    .gnb {
+        height: 65px;
+        background-color: aquamarine;
+        ul {
+            display: flex;
+            justify-content: space-around;
+            line-height: 65px; /* 줄 높이 맞추는 속성 대체로 부모 요소의 height와 맞출것. */
+            li {
+                ul.submenu-ul {
+                    display: none;
+                    text-align: center;
+                }
+            }
+            li:hover {
+                cursor: pointer;
+                ul.submenu-ul {
+                    display: block;
+                    position: absolute;
+                    z-index: 1;
+                }
+            }
+        }
+    }
+}
+
+.wrap-content {
+    height: 500px;
+    background-color: yellow;
+    display: flex; /* display flex는 자식 요소를 가로정렬*/
+    .left_menu {
+        width: 30%; /* 너비값 설정 */
+        background-color: chartreuse; /* 배경색 설정 */
+    }
+    .content {
+        width: calc(
+            100% - 30%
+        ); /* 콘텐츠 영역 너비 calc사용시 무조건 공백이 있어야함. */
+        background-color: brown;
+    }
+}
+
+.footer {
+    height: 100px;
+    background-color: green;
+    display: flex;
+    .footerlogo {
+        width: 100px;
+        background-color: bisque;
+    }
+    .address {
+        width: calc(100% - 100px);
+        background-color: aqua;
+    }
+}

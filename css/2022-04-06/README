@@ -1,0 +1,17 @@
+display
+inline : 사이즈가 콘텐츠 영역만큼 잡는다.
+사이즈 관련 스타일(width, height, margin, padding 등)은 적용되지 않으며, color, background
+은 적용됨
+ex) span, a, ...
+
+block : 요소가 혼자 한 줄을 차지함.
+ex) div, ul, li, p, ...
+
+inline-block : inline속성과 block속성을 합친 것으로
+inline요소의 경우 width, height같은 스타일을 적용할 수 없기 때문에 inline-block을 통해
+inline의 성질을 중심으로 추가적으로 block에서 사용할 수 있는 사이즈 관련 스타일도 적용이
+가능함.
+
+less를 통해 css로 변환하도록 실습 진행 완료
+
+과제 구조를 잡은 후 스타일을 적용해보자(display: flex 적용) 

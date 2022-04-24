@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <p id="counter">0</p>
+    <button id="increase">증가</button>
+    <button id="decrease">감소</button>
+    <script>
+        const Counter = (function() {
+            // 카운터 상태값(외부에서 변경 불가능, 특정 메서드(increase, decrease에서 조작하도록 해야함.))
+            let counter = 0;
+            let pEl = document.querySelector("#counter");
+            /* return {
+                increase: function() {
+                    // 중첩 함수 호출시 외부함수의 생명주기보다 길고, 외부함수의 식별자를 참조하기 때문에 해당 함수는 클로저가 된다.
+                    pEl.textContent = `${++counter}`; // 상태값은 메서드 호출시에만 변경 가능함.
+                },
+                decrease: function() {
+                    // 중첩 함수 호출시 외부함수의 생명주기보다 길고, 외부함수의 식별자를 참조하기 때문에 해당 함수는 클로저가 된다.
+                    pEl.textContent = `${--counter}`;
+                }
+            } */
+
+            function Counter() {
+                // 프로퍼티는 public하므로 은닉되지 않으니 사용하지 않는다.
+            }
+
+            Counter.prototype.increase = function() {
+                // 중첩 함수 호출시 외부함수의 생명주기보다 길고, 외부함수의 식별자를 참조하기 때문에 해당 함수는 클로저가 된다.
+                pEl.textContent = `${++counter}`; // 상태값은 메서드 호출시에만 변경 가능함.
+            }
+
+            Counter.prototype.decrease = function() {
+                // 중첩 함수 호출시 외부함수의 생명주기보다 길고, 외부함수의 식별자를 참조하기 때문에 해당 함수는 클로저가 된다.
+                pEl.textContent = `${--counter}`;
+            }
+
+            return Counter
+        })();
+
+        document.querySelector("#increase").addEventListener("click", new Counter().increase);
+        document.querySelector("#decrease").addEventListener("click", new Counter().decrease);
+    </script>
+</body>
+</html>
