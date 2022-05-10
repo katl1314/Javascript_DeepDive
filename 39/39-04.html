@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <ul class="fruits">
+            <li class="apple">Apple</li>
+            <li class="orange">Orange</li>
+            <li class="banana">Banana</li>
+        </ul>
+        <script>
+            /*
+            자식 요소 검색
+            */
+            const fruitsUl = document.querySelector(".fruits"); // Node 또는 Elements을 모두 상속받음.
+            // NodeList
+            // childNodes는 개행문자도 포함됨.,
+            console.log("childNodes", fruitsUl.childNodes); // Node.prototype.childNodes
+            // HtmlCollection
+            // children은 요소 노드를 반환함.
+            console.log("children", fruitsUl.children); // Element.prototype.children
+            /*
+            부모 요소 검색
+            */
+            const orangeLi = document.getElementsByClassName("orange")[0];
+            /*
+            parentNode : Node.prototype.parentNode : 부모 노드를 검색함. 텍스트 노드 또는 요소 노드를 검색한다.
+            parentElement : Element.prototype.parentElement : 부모의 요소 노드를 검색함.
+            */
+            const { parentNode, parentElement } = orangeLi;
+            console.log(parentNode, parentElement);
+            /*
+            형제 요소 검색
+            Node.prototype.nextSibling
+            Node.prototype.previousSibling
+            Element.prototype.nextElementSibling
+            Element.prototype.previousElementSibling
+            nextSibling : 현재 노드에서 다음 형제 노드를 검색한다  텍스트 노드 또는 요소 노드를 검색함.
+            previousSibling : 현재 노드에서 이전 형제 노드를 검색한다 텍스트 노드 또는 요소 노드를 검색한다.
+            nextElementSibling : 현재 요소 노드에서 다음 형제 요소 노드를 검색
+            previousElementSibling: 현재 요소 노드에서 이전 형제 요소 노드 검색
+            */
+
+            /*
+                Node.prototype.childNode, Element.prototype.children 이외의 방법으로 첫번째, 마지막 노드를 검색할 수 있음
+                Node.prototype.firstChild, lastChild : 첫번째, 마지막 자식 노드를 검색 텍스트 노드 또는 요소 노드
+                Element.prototype.firstElementChild, lastElementChild : 첫번째 마지막 자식 요소 노드를 검색
+
+                자식 노드의 여부
+                Node.prototype.hasChildNode()를 사용하여 true이면 자식 노드가 포함되었으며, false인 경우 자식 노드(텍스트 노드 포함)이 없을때
+                자식 요소 노드의 여부
+                바로 알수 있는 프로퍼티나 메서드가 존재하지 않음.
+                다만 Element.prototype.childElementCount 또는 Element.prototype.children.length를 통해 0보다 크면 자식 요소 노드가 존재함.
+            */
+
+            const { nodeType, nodeName } = fruitsUl;
+            console.log(nodeType, nodeName); // 요소 노드에 대한 노드 타입, 노드 이름을 반환함.
+            // nodeType은 ELEMENT_NODE이므로 1, nodeName은 요소 노드시 태그명을 반환함 'UL'
+
+            const { nodeType: NT, nodeName: NN } = fruitsUl.firstChild; // Node.prototype.firstChild는 자식 노드를 검색함. 텍스트 노드도 검색 대상임.
+            console.log(NT, NN); // fruitsUl.firstChild는 텍스트 노드이므로 nodeType은 TEXT_NODE 3, nodeName은 텍스트 노드이면 #text를 출력함.
+
+            /*
+            document : 문서 노드 (Node.DOCUMENT_NODE)는 nodeType이 Node.DOCUMENT_NODE 9, nodeName은 #document이 출력됨.
+            */
+        </script>
+    </body>
+</html>

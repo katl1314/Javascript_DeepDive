@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+        <style>
+            .red {
+                color: red;
+            }
+
+            .blue {
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li class="red">Apple</li>
+            <li class="red">Banana</li>
+            <li class="red">Orange</li>
+        </ul>
+        <script>
+            // Document.prototype.getElementsByClassName, TagName은
+            // 해당하는 요소 노드를 갖는 HTMLCollection을 반환함.
+            // HTMLCollection은 실시간으로 변경되는 객체이자 이터러블 객체임 for...of 또는 스프레드 문법같은 기능 사용함.
+            var $elem = document.getElementsByClassName("red"); // HTMLCollection은 이터러블 객체이므로 Spread문법, for...of, 디스트럭처링 가능함.
+
+            // 잘못된 사례
+
+            /* for (let i = 0; i < $elem.length; i++) {
+                // 역순이 아닌 HTMLCollection을 수정하게 되면 실시간으로 변경됨으로, $elem의 length가 줄어든다.
+                console.log($elem[i], i);
+                $elem[i].className = "blue";
+            } */
+
+            /* for (let i = $elem.length; i > 0; i--) {
+                // 역순으로 처리하여 HTMLCollection의 길이가 줄어들어도 정상적으로 처리하도록 해야함.
+                $elem[i - 1].className = "blue";
+            } */
+            var i = 0;
+            /*  while ($elem.length) {
+                // 어짜피 HTMLCollection의 길이는 요소 노드의 className이 변경될때마다 변경되기 때문에
+                // 0번째 요소 노드의 className을 변경한다.
+                $elem[i].className = "blue";
+                console.log($elem, i);
+            } */
+
+            // HTMLCollection은 이터러블 객체이므로 Spread문법을 사용할 수 있음
+            // Spread문법을 이용하여 이터러블 객체를 일반 배열로 변환해서 처리한다.
+            [...$elem].forEach((el) => (el.className = "blue"));
+        </script>
+    </body>
+</html>

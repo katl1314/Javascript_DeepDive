@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <body>
+        <ul>
+            <li class="fruit" id="apple">Apple</li>
+            <li class="fruit" id="banana">Banana</li>
+            <li class="fruit" id="orange">Orange</li>
+        </ul>
+    </body>
+    <script>
+        // HTML 요소의 id 어트리뷰트를 가지고 요소 노드를 반환해보자.
+        // Document.prototype.getElementById(id);
+        // 문서 노드인 document 또는 window.document를 통해 호출해야함.
+        // id는 Document에서 중복되면안됨. 반드시 유일해야함.
+        console.dir(
+            'document.getElementById("banana")',
+            document.getElementById("banana")
+        );
+        console.dir(document.getElementById("banana") instanceof HTMLElement);
+        console.dir(document.getElementById("banana") instanceof Node);
+
+        // 요소 노드의 어트리뷰트 값이 banana2가 있는지 체크한다. 없으면 null
+        console.dir(document.getElementById("banana2")); // null
+
+        // DOM API를 이용하여 해당 요소 노드의 스타일을 변경해보자
+        // Elememt.style.color
+        document.getElementById("banana").style.color = "red";
+
+        // 요소 노드의 id값은 전역객체(window)의 프로퍼티로 추가됨.(전역변수로 암묵적으로 선언됨.)
+        console.log(apple === document.getElementById("apple"));
+
+        // 전역 변수로 선언시 전역객체의 프로퍼티는 삭제할 수 없음.
+        console.log(delete apple, apple);
+
+        window.globalValue = 20;
+        // console.log(delete globalValue, globalValue); // 전역 객체의 프로퍼티는 일반 객체와 마찬가지로 delete를 통해 프로퍼티 삭제가 가능함.
+
+        var globalValue = 20; // var키워드를 통해 전역 변수를 선언 시 암묵적으로 전역객체의 프로퍼티로 추가됨.
+        // let, const는 전역변수로 선언해도 전역 객체의 프로퍼티로 추가되지 않음.
+        console.log(window.globalValue);
+
+        // 전역변수은 delete를 통해 전역객체에서 삭제할 수 없음.
+        console.log(delete globalValue, globalValue); // false 20
+
+        // 태그 이름을 통해 요소 노드들을 검색한다.
+        // Document.prototype.getElementsByTagName(tagName or '*');
+        // Element.prototype.getElementsByTagName(tagName or '*')
+        // 함수 인자로 '*'사용시부모 요소 노드에서 자식 요소 노드를 검색함.
+        // 태그 이름과 일치하는 요소 노드를 모두 찾아 HTMLCollection으로 반환함.
+        // 메서드를 호출하는 대상 요소 노드를 기준으로 검색함.
+
+        const colors = ["red", "blue", "yellow"];
+        // 반환값은 이터러블 객체임.
+        [...document.getElementsByTagName("li")].forEach(
+            (el, index) => (el.style.color = colors[index])
+        );
+
+        const createObject = (name, age) => ({ name, age });
+        console.log(createObject("James", 30));
+
+        // className을 통한 검색
+        // Document.prototype.getElementsByClassName(className)
+        // or Element.prototype.getElementsByClassName(className)
+
+        // 대상 노드를 기준으로 하위 요소 노드의 class 어트리뷰트 값을 비교하여 일치하는 요소 노드 모두 HTMLCollection으로 반환함.
+        console.log(document.getElementsByClassName("fruit"));
+        console.log(document.getElementsByClassName("*")); // 클래스 어트리뷰트 값이 "*"를 가진 요소 노드가 없으면 빈 객체를 반환.
+    </script>
+</html>

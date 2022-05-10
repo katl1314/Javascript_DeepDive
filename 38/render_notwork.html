@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- HTML파싱전 test.js를 로드 및 실행 시 div.box가 렌더링되지 않았으므로 에러가 발생함 -->
+        <!-- <script src="./js/test.js"></script> -->
+        <!--
+            외부 자바스크립트 파일을 로드하는 script태그에 속성으로 defer와 async를 사용하여
+            script를 로드하는 중에서도 HTML파싱을 중단하지 않도록 할 수 있음.
+        -->
+        <!-- <script src="./js/test.js" defer></script> -->
+        <script src="./js/test.js" async></script>
+        <title>Document</title>
+        <style>
+            .box {
+                width: 500px;
+                height: 500px;
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box"></div>
+    </body>
+    <!-- HTML파싱(렌더링)이 끝나고 test.js를 호출할 경우 에러 발생하지 않음-->
+    <!-- <script src="./js/test.js"></script> -->
+</html>
