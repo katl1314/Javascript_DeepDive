@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <div id="foo"><span>Hello</span><span>ddd</span></div>     -->
+    <div id="foo">Hello</div>
+    <div id="hidden" style="visibility: hidden;">1231232</div>
+</body>
+<script>
+    // Node.prototype.nodeValue : 노드 객체의 값을 나타냄
+    // 문서 노드 또는 요소 노드가 아닌 텍스트 노드의 값을 출력함.
+    // Node.prototype.nodeValue는 접근자 프로퍼티(setter, getter)이므로 설정 및 취득할 수 있음.
+    // Document Node(문서 노드) 
+    const {nodeValue: dNodeValue, nodeType: dNodeType, nodeName: dNodeName} = document;
+    console.log(dNodeValue, dNodeType, dNodeName); // null 9 #document
+
+    // Element Node(요소 노드)
+    const {nodeValue: eNodeValue, nodeType: eNodeType, nodeName: eNodeName} = document.getElementById("foo");
+    console.log(eNodeValue, eNodeType, eNodeName); // null 1 DIV
+
+    const {nodeValue, nodeType, nodeName} = document.getElementById("foo").firstChild;
+    console.log(nodeValue, nodeType, nodeName); // Hello 3 #text
+
+    /*
+    Element.prototype.textContent : 요소 노드의 텍스트, 자손 노드의 텍스트를 취득 및 변경함.
+    Node.prototype.nodeValue와 마찬가지로 접근자 프로퍼티임.
+    */
+    // getter를 통한 텍스트 취득
+    console.log(document.getElementById("foo").textContent);
+
+    // setter를 통한 텍스트 변경
+    // document.getElementById("foo").textContent = "asdasd";
+</script>
+</html>

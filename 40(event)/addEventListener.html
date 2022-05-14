@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <body>
+        <ul id="text">
+            <li class="first">First</li>
+            <li class="second">Second</li>
+            <li class="third">Third</li>
+        </ul>
+        <script>
+            // EventTarget.addEventListener(eventType, eventListener, [, useCapture])
+            // EventTarget : 이벤트 타깃
+            // eventType : 이벤트 타입
+            // 이벤트 핸들링 어트리뷰트 방식 및 DOM객체 프로퍼티 등록 방식 처럼 접두사 'on'을 붙이지 않음.
+            // onkeyup -> keyup(addEventListener)
+            // useCapture -> 캡처링 사용 여부
+            //      true - 캡처링 사용
+            //      false - 캡처링 미사용
+            // 이벤트 핸들러의 첫번째 인자로 이벤트 객체를 전달함 -> 현 샘플은 이벤트 객체를 디스트럭처링하였다.
+            const clickHandler = ({
+                type,
+                target,
+                currentTarget,
+                eventPhase,
+                bubbles,
+            }) => {
+                // Event.eventPhase -> 1(캡처링), 3(버블링), 2(타겟팅)
+                // 타겟팅의 경우(eventParse 2) currentTarget과 target이 일치해야함. (이벤트 핸들러를 등록한 타겟이랑 실제 이벤트가 발생한 타깃이 일치.)
+                // 캡처링과 버블링의 경우 Event객체의 currentTarget과 target이 일치하지 않으며, eventParse의 경우 캡처링은(1), 버블링은(3)
+                console.log(`type : ${type}`);
+                console.log(`target :`, target); // 실제 이벤트가 발생한 타겟
+                console.log(`currentTarget : `, currentTarget); // 이벤트 핸들러가 등록한 타겟
+                console.log(`eventPhase : ${eventPhase}`);
+                console.log(`bubbles : ${bubbles}`);
+
+                const obj = {
+                    type,
+                    target,
+                    currentTarget,
+                    eventPhase,
+                    bubbles,
+                };
+
+                console.log(obj);
+
+                // 이벤트 핸들러 호출 후 이벤트 핸들러를 삭제해보자.
+                // 이벤트 핸들러 등록 시 사용한 인자와 일치해야함. 일치하지 않으면 동작하지 않음.
+                // 이벤트 핸들러의 경우 이벤트 핸들러를 참조하는 변수나 자료구조에 저장되어있어야 삭제가능함.
+                // 직접 addEventListener에 익명함수로 설정할 경우 삭제가 불가능.
+                document
+                    .getElementById("text")
+                    .removeEventListener("click", clickHandler, false); // removeEventListener함수의 인자는  addEventListener와 동일하다.
+            };
+
+            // 이벤트 타입마다 이벤트 핸들러를 단 한개만 사용 가능함.
+            document
+                .getElementById("text")
+                .addEventListener("click", clickHandler, false);
+
+            // 이벤트 핸들러 제거
+            // EventTarget.removeEventListener(eventType, handler, [,capture])
+            // addEventListener와 매개변수가 동일함.
+        </script>
+    </body>
+</html>

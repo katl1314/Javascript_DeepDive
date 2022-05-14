@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <span class="message">0</span>
+    <button>Click Me!</button>
+    <ul id="fruits">
+        <li class="apple">apple</li>
+        <li class="orange">orange</li>
+        <li class="banana">banana</li>
+    </ul>
+    <script>
+        const $button = document.querySelector('button');
+        const $message = document.getElementsByClassName('message')[0];
+
+        var count = 0;
+        // button 클릭 시 count하는 기능을 만들어보자.
+        // 사용자가 이벤트를 발생하면 함수를 실행한다.
+        // 이벤트의 종류는 key, mouse, load, 상당히 많음.
+        
+        /*
+            마우스 이벤트
+            click : 클릭 시 이벤트 발생
+            dblclick : 더블 클릭 시 이벤트 발생
+            mousedown : 마우스 눌렀을때 발생
+            mouseup : 마우스에서 손을 땠을 때
+            mousemove : 마우스 커서 움직임
+            mouseenter : 이벤트 타겟에 마우스 커서가 올라오면(버블링 발생X)
+            mouseover : 이벤트 타겟에서 마우스 커서가 올라옴(버블링 발생)
+         * /
+
+        // 클릭 시 이벤트 발생
+         /* $button.onclick = function () {
+            $message.firstChild.nodeValue = `${++count}`; // 텍스트 노드의 nodeValue를 이용하여 표현
+            $message.textContent = `${++count}`;
+        } */
+        // 더블 클릭 시 이벤트 발생
+        $button.ondblclick = function(e) {
+            alert('더블 클릭');
+        }
+        // 마우스에서 손을 땠을 때 발생
+        $button.onmouseup = function(e) {
+            console.log('mouseup', e);
+        }
+        // 마우스에 손을 눌렀을 때 발생함.
+        $button.onmousedown = function() {
+            console.log('mousedonw');
+        }
+
+        // 타깃 요소에 마우스 포인터를 올릴때 (버블링 발생하지 않음.)
+        /* document.getElementById('fruits').onmouseenter = function(e) {
+            console.log(e.target, e.currentTarget);
+        } */
+
+        // 타깃 요소에 마우스 포인터를 올릴때
+        /* document.getElementById('fruits').onmouseover = function(e) {
+            console.log(e.target, e.currentTarget);
+        } */
+        // onmouseover시 버블링이 되더라.
+        // Document.prototype.addEventListener(eventType, handler, options(true시 capturing))
+        document.getElementById('fruits').addEventListener('mouseover', function (e) {
+            // e.target => 실제로 이벤트가 발생한 타깃
+            // e.currentTarget => 이벤트 핸들러가 바인딩된 타깃
+            console.log(e.target, e.currentTarget);
+        });
+
+        // onmouseout / onmouseover => 버블링이 발생하는 이벤트임.
+        // document.getElementById('fruits').onmouseout = function() {}
+
+        // onmouseleave / onmouseenter => 버블링이 발생하지 않음.
+
+        // 버블링 : 하위 요소에서 발생한 이벤트를 상위 요소로 전파하는 것
+        // 캡처링 : 상위 요소에서 발생한 이벤트를 하위 요소로 전파하는 것
+        // 구현 방식 document객체의 addEventListener의 3번째 인자로 true설정시 캡처링 동작함, 기본값은 false으로 버블링이 발생하는 이벤트는 버블링동작
+
+        // enter/leave
+        // out/over (버블링)
+    </script>
+</body>
+</html>

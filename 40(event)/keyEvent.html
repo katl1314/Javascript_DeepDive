@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <body>
+        <input type="text" id="name" onkeyup="callMe" />
+        <script>
+            var $input = document.getElementById("name");
+            // 키보드를 눌렀을때 이벤트를 발생함.
+            // onkeyup, onkeydown은 키보드의 모든 자판을 클릭해도 동작함.
+            /* $input.onkeydown = function(e) {
+            console.log('keydown', e);
+        } */
+
+            // 키보드를 누르고 있을 때 이벤트 핸들러 실행
+            // 문자, 숫자, 특수문자, enter를 제외한 나머지는 동작 안함.
+            /* $input.onkeypress = function(e) {
+            console.log('keypress', e);
+        } */
+
+            // 키보드에서 땠을때 발생하는 이벤트
+            /* $input.onkeyup = function (e) {
+                console.log(e);
+            }; */
+
+            // 이벤트 핸들러 등록에는 다음 방식이 있음
+            // 이벤트 핸들러 어트리뷰트 방식 타깃 요소에 직접 어트리뷰트로 등록
+            // 이벤트 핸들러 등록은 함수의 호출을 브라우저에 위임함. 즉 함수 참조를 등록해야 브라우저에서 함수를 호출 할 수 있다.
+            // $input.onkeyup = function() {}
+
+            function callMe(e, a) {
+                console.log("Cell Me~", e, a);
+            }
+            // $input.onkeyup = callMe(); // 이벤트 핸들러 어트리뷰트에 함수 호출문 사용시 함수의 결과값이 이벤트 핸들러로 등록함.
+            /*
+            요소 노드에 직접 이벤트 어트리뷰트 설정했을 때 이벤트 핸들러에서 이벤트 객체를 받을 수 없는듯.
+            */
+        </script>
+    </body>
+</html>

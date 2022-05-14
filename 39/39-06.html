@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="foo">Hello <span>World!</span></div>
+    <script>
+        var $el = document.getElementById("foo");
+        console.log($el.firstElementChild); // 자식 노드 중 첫번째 요소 노드를 검색
+        console.log($el.firstChild); // 자식의 모든 노드 중 첫번째 노드를 검색(텍스트 노드)
+
+        // DOM 조작
+        // DOM API를 이용하여 새로운 노드를 DOM에 추가, 삭제, 변경할 수 있음
+        // 리플로우 리페인팅이 발생하기 때문에 성능에 영향을 미침.
+
+        // Element.prototype.innerHTML
+        // 접근자 프로퍼티로서, 요소 노드의 HTML마크업을 취득하거나 변경함.
+        // 요소 노드 내 모든 HTML마크업을 문자열로 변환하여 취득
+
+        $el.firstElementChild.innerHTML = '<p>NEW MARKUP</p>'; // 첫번째 자식 요소 노드를 새로운 HTML마크업으로 변경하여 DOM조작
+
+        // Element.prototype.insertAdjacentHTML(pos, DOMString) : 기존 요소를 삭제하지 않고, 지정한 위치에 새로운 요소를 추가하는 메서드임
+        // 두번째 인자로 DOMString을 전달 후 파싱하여 DOM에 반영함. 첫번째 인자로 전달한 위치에 추가
+        // 위치 : beforebegin(열린 태그 전에), afterbegin(열린 태그 후에), beforeend(닫힌 태그 전에), afterend(닫힌 태그 후에)
+
+        $el.firstElementChild.insertAdjacentHTML('beforebegin', '<div>beforebegin</div>'); // 열린 태그 안에 2번째 인자를 파싱후 DOM에 반영함.
+        $el.firstElementChild.insertAdjacentHTML('afterbegin', '<div>afterbegin</div>'); // 열린 태그 밖에 2번째 인자를 파싱후 DOM에 반영함.
+        $el.firstElementChild.insertAdjacentHTML('beforeend', '<div>beforeend</div>'); // 닫힌 태그 안에 2번째 인자를 파싱후 DOM에 반영함.
+        $el.firstElementChild.insertAdjacentHTML('afterend', '<div>afterend</div>'); // 닫힌 태그 밖에 2번째 인자를 파싱후 DOM에 반영함.
+    </script>
+    <script>
+        /*
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://jsonplaceholder.typicode.com/photos"); // 서버에 전송전 초기화
+
+        xhr.setRequestHeader("content-type", "application/json");
+
+        xhr.onreadystatechange = function(e) {
+            if (xhr.readyState === 4) {
+                const { status, responseText } = xhr;
+
+                if (status === 200) { // SUCCESS
+                    console.log(JSON.parse(responseText));
+                }
+            }
+        }
+        
+        xhr.send(); // 서버에 request POST, PATCH, PULL사용시 문자열 JSON포맷으로 인자로 전달해야함.
+        */
+        // fetch함수의 반환값은 Promise객체가 반환됨으로, then 또는 catch를 통해서 처리한다.
+        const myPromise = fetch("https://jsonplaceholder.typicode.com/photos", {
+            method : 'GET',
+        });
+
+        console.log(myPromise);
+
+        myPromise
+            .then(d => d.json())
+            .then(d => console.log(d))
+            ;
+
+    </script>
+</body>
+</html>
