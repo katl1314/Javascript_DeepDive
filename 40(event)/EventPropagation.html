@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Document</title>
+    </head>
+    <body>
+        <!--
+            viewpoint : 웹사이드가 사용자에 보여자는 영역을 의미함.
+        -->
+        <ul id="fruits">
+            <id id="apple">Apple</id>
+            <id id="banana">Banana</id>
+            <id id="orange">Orange</id>
+        </ul>
+        <script>
+            document.getElementById("fruits").addEventListener(
+                "click",
+                (e) => {
+                    console.log(
+                        e.target,
+                        e.currentTarget,
+                        e.eventPhase,
+                        e.bubbles
+                    );
+                },
+                true
+            );
+
+            document.getElementById("apple").addEventListener("click", (e) => {
+                console.log("apple");
+            });
+
+            document.getElementById("banana").addEventListener("click", (e) => {
+                console.log("banana");
+            });
+
+            document.getElementById("orange").addEventListener("click", (e) => {
+                console.log("orange");
+            });
+        </script>
+    </body>
+</html>

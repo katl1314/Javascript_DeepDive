@@ -1,0 +1,31 @@
+<script>
+    let e = new Event("foo");
+    console.log(e);
+
+    const {
+        isTrusted,
+        bubbles,
+        cancelBubble,
+        cancelable,
+        currentTarget,
+        eventPhase,
+    } = e;
+
+    // A instanceof B
+    // B객체가 A의 프로토타입체인상에 존재하면 true(상속관계)
+    console.log(e instanceof Event); // e instanceof Event
+    console.log(e instanceof Object); // e instanceof Object
+
+    // FocusEvent생성자 함수를 호출하여 FocusEvent 객체를 생성 (focus 이벤트 타입)
+    e = new FocusEvent("focus");
+    console.log(e);
+    console.log(e instanceof FocusEvent);
+    console.log(e instanceof Event);
+    console.log(e instanceof Object);
+    /*
+    생성자 함수를 통해 커스텀 이벤트를 생성할 수 있음.
+    new Event(type) => Event객체
+
+    FocusEvent -> UIEvent -> Event -> Object(최상위 객체)
+    */
+</script>

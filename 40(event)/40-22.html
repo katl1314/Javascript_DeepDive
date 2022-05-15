@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <body>
+        <input type="text" />
+        <input type="checkbox" />
+        <button>Click Me~</button>
+        <script>
+            // load이벤트가 발생하면 console.log함수에 이벤트 객체를 인자로 전달하여 출력함.
+            window.onload = console.log;
+            // input 내용 변경 후 포커스 아웃 시 이벤트 onchange후 이벤트 객체를 이벤트 핸들러 첫번째 인자로 전달하여 출력함.
+            document.querySelector('input[type="text"]').onchange = console.log;
+
+            // focus 이벤트가 발생할 경우 FocusEvent객체를 이벤트 핸들러 첫번째 인자로 전달.
+            document.querySelector('input[type="text"]').onfocus = console.log; // FocusEvent
+
+            // inptut영역에 입력할 때마다 InputEvent발생
+            document.querySelector('input[type="text"]').oninput = console.log;
+
+            // input에 keyup이벤트 발생할때 마다 KeyboardEvent 객체를 이벤트 핸들러 전달.
+            document.querySelector('input[type="text"]').onkeyup = console.log;
+
+            // button click이벤트 발생시 MouseEvent객체를 이벤트 핸들러 전달
+            document.querySelector("button").onclick = console.log;
+
+            // onmouseover / onmouseout -> 버블링 O
+            // onmouseenter / onmouseleave -> 버블링 X
+
+            /*
+                Event객체의 공통 속성
+                1. type : 이벤트 타입
+                2. target : 이벤트가 발생한 타겟
+                3. currentTarget : 이벤트 헨들러가 바인딩된 타겟 (target과 currentTarget이 다글 경우 이벤트 전파가 이루어짐)
+                4. eventPhase : 이벤트 전파 단계
+                    0 - 이벤트 X, 1 - 이벤트 캡처링(상위 요소에서 하위 요소로 이벤트 전파), 2. 타깃 단계, 3. 버블링(하위 -> 상위)
+                5. bubbles : 이벤트를 버블링으로 상위 요소로 전파되는지 여부 (일부 이벤트는 bubbles가 false이므로 버블링이 불가능함.)
+                6. cancelable(이벤트 중단하기 위한 메서드 사용가능한지 여부) : Event.prototype.preventDeafult을 통한 이벤트 중단 가능 여부
+                7. defaultPrevented(이벤트 중단 여부) => preventDefault를 통한 이벤트 중단이 되었는지 확인
+                8. isTrusted(사용자 행위 여부) : 사용자 행위에 의한 이벤트가 발생하였는지 아님 dispatchEvent를 통해 이벤트를 발생했는지 true of false으로 반환함.
+                9. timestamp(이벤트 발생 시간 ms) : 이벤트 발생 시각 밀리초 반환
+
+                9개의 공통 프로퍼티 이외의 각 이벤트 고유의 프로퍼티가 있음.
+            */
+        </script>
+    </body>
+</html>
