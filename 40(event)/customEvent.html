@@ -17,15 +17,27 @@
     console.log(e instanceof Object); // e instanceof Object
 
     // FocusEvent생성자 함수를 호출하여 FocusEvent 객체를 생성 (focus 이벤트 타입)
-    e = new FocusEvent("focus");
+    e = new FocusEvent("focus", {
+        
+    });
     console.log(e);
     console.log(e instanceof FocusEvent);
     console.log(e instanceof Event);
     console.log(e instanceof Object);
     /*
     생성자 함수를 통해 커스텀 이벤트를 생성할 수 있음.
-    new Event(type) => Event객체
+    new Event(type, {options}) => Event객체
 
     FocusEvent -> UIEvent -> Event -> Object(최상위 객체)
     */
+
+    const obj = {
+        bubbles : true,     // 버블링(이벤트 전파)여부
+        cancelable : true, // 이벤트 취소 가능 여부
+    }
+    const mouseEvent = new MouseEvent('click', obj);
+
+    // console.log(mouseEvent);
+    console.log(mouseEvent.bubbles, mouseEvent.cancelable);
+
 </script>

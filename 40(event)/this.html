@@ -1,0 +1,45 @@
+<!--
+    1. 이벤트 핸들러 요소 노드 어트리뷰트 정의 방식
+    기본적으로 일반함수 내 this는 전역 객체를 가리킴
+    이벤트 핸들러 함수는 이벤트가 발생해야 또는 dispatchEvent가 동작해야함.
+
+    근데 이벤트 핸들러를 호출할 때 인자를 this를 전달하면 이벤트 핸들러 첫번째 매개변수로 받을 수 있음.
+    <button onclick  = "fnHandler(this)"></button>
+
+    function fnHandler(arg) {
+        console.log(arg) // DOM객체(전역객체 X)
+    }
+
+    다만 어트리뷰트 방식이 아닌 프로퍼티 및 addEventListener의 handler함수 내에서는 일반 함수로 사용시 this를 DOM요소를 가리킴
+
+    button.onclick = function(e) {
+        console.log(this); // 전역객체 X, DOM요소 O
+    }
+
+    button.addEventListener("click", function() {
+        console.log(this); // 전역객체 X, DOM요소 O
+    })
+
+    listener사용할때 일반 함수가 아닌 화살표함수 사용할 경우 this를 자체적으로 갖지 않고 상위 스코프를 참조함. 이를 주의할것
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <body>
+        <button id="b">버튼</button>
+        <script>
+            const $b = document.getElementById("b");
+            /* $b.onclick = (e) => {
+                console.log(this); // 이벤트 핸들러 함수를 화살표 함수를 사용할 경우 this는 상위 스코프의 this를 참조함
+                // 화살표 함수의 상위 스코프의 this는 전역 스코프의 this를 참조하므로 전역객체를 가리킴.
+            }; */
+
+            $b.onclick = function (e) {
+                console.log(this); // 전역객체가 아닌 dom요소를 갖는다.
+            };
+        </script>
+    </body>
+</html>

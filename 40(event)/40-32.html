@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #fruits {
+                display: flex;
+                list-style-type: none;
+                padding: 0;
+            }
+            #fruits > li {
+                width: 100px;
+                cursor: pointer;
+            }
+            .active {
+                color: red;
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 시맨틱 태그  "를" 쓸꺼에여 -->
+        <nav>
+            <ul id="fruits">
+                <li id="apple" class="active">Apple</li>
+                <li id="banana">Banana</li>
+                <li id="orange">Orange</li>
+            </ul>
+        </nav>
+        <div>선택된 네비게이션 이름 <em class="msg"></em></div>
+    </body>
+    <script>
+        const $fruits = document.getElementById("fruits");
+        const $msg = document.querySelector(".msg");
+
+        function activate({ target }) {
+            // 선택한 타겟의 css selector가 ul > li가 아니면 함수 종료함.
+            if (!target.matches("ul > li")) {
+                return;
+            }
+
+            // active가 적용된 노드가 있을 겨우 active클래스를 제거한다.
+            [...$fruits.children].forEach((el) => {
+                /* if (el.classList.contains("active")) {
+                    el.classList.remove("active");
+                } */
+                // toggle을 사용할 경우 조건을 부여할 수 있음.
+                // Element.classList.toggle(className, condition)
+                el.classList.toggle("active", el === target);
+                $msg.textContent = target.id;
+            });
+
+            // target.classList.add("active");
+            // $msg.textContent = target.textContent;
+        }
+
+        $fruits.onclick = activate;
+    </script>
+</html>

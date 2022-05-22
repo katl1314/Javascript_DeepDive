@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <a href="http://www.naver.com">네이버</a>
+        <script>
+            // a태그를 클릭하여 네이버로 이동하는 것을 막아보자
+            // preventDefault메서드를 이용함.
+
+            document.querySelector("a").onclick = (e) => {
+                e.preventDefault(); // a태그의 기본 동작을 제어함.
+            };
+        </script>
+    </body>
+</html>

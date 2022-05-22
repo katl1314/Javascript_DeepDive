@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label>User name <input type="text"></label><br>
+    <em class="message"></em>
+    <script>
+        const $input = document.querySelector('input[type="text"]');
+        const $msg = document.querySelector('.message');
+        
+        const checkUserNameLength = (minLength) => {
+            $msg.textContent = $input.value.length < minLength ?
+            `글자 수를 ${minLength} 보다 많이 입력하시오.`
+            : $input.value;
+        }
+        
+        $input.onblur = () => {
+            const MIN_USER_NAME_LENGTH = 5;
+            // 이벤트 핸들러 내부에 함수를 호출하면서 인수를 전달함.
+            checkUserNameLength(MIN_USER_NAME_LENGTH); // 실질적으로 처리하는 함수
+        }
+        /*
+            이벤트 핸들러 함수에 인수를 전달하기 위해서는
+            addEventListener으로 넘길 수 없음
+            이벤트 핸들러 경우 함수 호출문이 아닌, 함수 자체를 등록해야함.
+            함수 자체 등록시 이벤트 큐에 콜백은 저장함.
+
+            이벤트 핸들러 내부에 함수를 호출하면서 인수를 전달이 쌉가능함.
+        */
+
+        // 이벤트 강제 호출
+        // Element.prototype.dispatchEvent
+    </script>
+</body>
+</html>

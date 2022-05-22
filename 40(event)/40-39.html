@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">0</button>
+    <!--
+        이벤트 핸들러 등록은 어트리뷰트 방식, 프로퍼티 방식, addEventListener방식이 있음,
+        기본적으로 이벤트 핸들러 함수내 this는 DOM요소를 가리킴.
+        BUT 화살표 함수의 경우 자체 this를 갖지 않고, 상위 스코프의 this를 참고하기 때문에 화살표 함수 사용시 this를 사용하면 안됨.
+    -->
+    <script>
+        class App {
+            constructor() {
+                this.$button = document.getElementById("btn");
+                this.counter = 0;
+
+                this.$button.onclick = this.increase;
+            }
+
+            increase() {
+                // ES6 메서드
+                // button의 클릭 이벤트 핸들러로 ES6메서드 사용하였을 때 this는 인스턴스가 아닌, dom요소임.
+                // 그래서 this.counter는 DOM요소의 프로퍼티가 아닌 App클래스의 인스턴스의 프로퍼티이므로 접근이 불가능함.
+                console.log(this);
+            }
+        }
+        new App();
+    </script>    
+</body>
+</html>
