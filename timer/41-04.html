@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        디바운스
+        짧은 시간동간 이벤트가 연속적으로 발생할 때 이벤트 핸들러를 실행하지 않고, 이벤트가 끝난 후 일
+        정시간이 지나면 이벤트 핸들러를 실행한다.
+    -->
+    <button>click me</button>    
+    <pre>일반 클릭 이벤트 카운터<span class="normal-msg">0</span></pre>
+    <pre>디바운스 클릭 이벤트 카운터<span class="debounce-msg">0</span></pre>
+    <pre>스로틀 클릭 이벤트 카운터<span class="throttle-msg">0</span></pre>
+    <script>
+        // 기본적으로 addEventListener에는 이벤트 핸들러 함수를 정의해야함.
+        // debounce,throttle의 인수를 전달하여 함수를 반환하도록 해야함.
+        const debounce = (callback, delay) => {
+            let timerId;
+            return event => {
+                if (timerId) {
+                    clearTimeout(timerId)
+                }
+                timerId = setTimeout(() => {
+                    callback(event)
+                }, delay);
+            }
+        }
+
+        const throttle = (callback, delay) => {
+            let timerId;
+            return event => {
+                if (timerId) return;
+                timerId = setTimeout(() => {
+                    callback(event);
+                    timerId = null; // 일정 시간이 지나면 콜백함수를 실행하고 timer를 초기화
+                }, delay);
+            }
+        }
+
+        var $btn = document.querySelector('button');
+
+        /* 일반 클릭 이벤트 카운터 */
+        $btn.addEventListener('click', () => {
+            var normalMsg = document.querySelector('.normal-msg');
+            normalMsg.textContent = Number(normalMsg.textContent) + 1;
+        });
+
+        /* 디바운스 클릭 이벤트 카운터*/
+        $btn.addEventListener('click', debounce(() => {
+            var debounceMsg = document.querySelector('.debounce-msg');
+            debounceMsg.textContent = Number(debounceMsg.textContent) + 1;
+        }, 1000));
+
+        /* 쓰로틀 클릭 이벤트 카운터 */
+        /* 짧은 시간동안 이벤트가 발생하는 순간에도 일정시간마다 이벤트 핸드러를 동작함. */
+        $btn.addEventListener('click',  throttle(() => {
+            var debounceMsg = document.querySelector('.throttle-msg');
+            debounceMsg.textContent = Number(debounceMsg.textContent) + 1;
+        }, 2000));
+    </script>
+</body>
+</html>

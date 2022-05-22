@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <input type="text" name="text" id="text" />
+        <script>
+            const debounce = (callback, delay) => {
+                // debounce구현시 클로저를 이용합시다.
+                // 클로저 중첨함수에서 외부 함수의 변수를 참조하고, 중첩함수의 생명주기가 외부 함수보다 길 경우 클로저가 발생함.
+                // 디바운스 : 짧은 시간동안 연속적으로 이벤트가 발생했을때 이벤트 핸들러를 호출하지 않고, 일정 시간 이후에 한번 이벤트 핸들러를 실행함.
+                let timerId;
+                return (event) => {
+                    if (timerId) {
+                        // input이벤트가 발생시 timerId에 값이 있으면 기존 타이머를 삭제하고, 재 정의를 한다.
+                        clearTimeout(timerId);
+                    }
+                    timerId = setTimeout(() => callback(event), delay);
+                };
+            };
+
+            document.getElementById("text").addEventListener(
+                "input",
+                debounce((e) => {
+                    console.log(e);
+                }, 3000)
+            );
+        </script>
+    </body>
+</html>

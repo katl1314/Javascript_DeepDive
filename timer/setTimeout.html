@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // timer는 함수를 호출하기 위해 예약하는 것
+        // 타이머 함수는 2가지 setTimeout, setInterval이 있음
+        // 시간은 ms(밀리세컨드)를 전달받음
+        // setTimeout : 일정 시간 지나서 콜백함수를 실행함.
+        // setInterval : 일정 시간이 지날때마다 콟백함수 실행 (일정 주기로 콜백 함수를 호출함.)
+        // setTimeout(function() {alert('3초 뒤에 실행함')}, 3000); // 3초 뒤에 콜백함수를 실행합니다.
+
+        function * generator() {
+            let cnt = 0;
+            while (true) {
+                yield ++cnt;
+            }
+        }
+        
+        /*
+        cons timerId = setInterval(callback, millisecond, ...param, ...); // setInterval, setTimeout은 timerId를 반환함.
+        clearInterval(timerId)
+
+        setInterval, setTimeout의 세번째 인수 부터는 콜백함수의 인수로 전달됨.
+        */
+        const interval = setInterval((...args) => myInterval(args), 1000, 'a', 'b'); // timerId = interval
+        
+        const myGenerator = generator();
+        
+        const myInterval = (args) => {
+            const { value, done } = myGenerator.next();
+            console.log(value, done);
+
+            if (value === 10) {
+                // setInterval 삭제
+                clearInterval(interval);
+                console.log(args);
+            }
+        }
+
+    </script>
+</body>
+</html>
