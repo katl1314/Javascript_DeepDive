@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+         * Ajax Ansychronous Javascript and XML
+         * 클라이언트(브라우저)가 서버에 데이터를 비동기적으로 요청시, 서버로부터 응답한 데이터를
+         * 가지고 동적으로 갱신하는 프로그래밍 방식임. 
+         * 
+         * 대표적인 WEB API로 XMLHttpRequest, fetch가 있음(Node.js에서 사용시 npm을 이용하여 별도로 설치해야함.)
+         * 
+         * 과거에는 모든 html파일을 서버로부터 전달받아 전체를 다시 렌더링을 하기 때문에, 깜빡임 현상, 성능 저하,
+         * 불필요한 요청이 많음.
+         * 
+         * 기존의 문제점을 해결 하기 위해 AJAX를 도입하여 모든 html을 렌더링 하지 않고, 변경된 부분만 렌더링하여
+         * 부드럽고 자연스럽게 렌더링하도록 개선되었다.
+         * 
+         * ajax 도입 후 장점
+         * 1. 필요 부분만 한시적으로 렌더링이 가능함.
+         * 2. 불필요한 서버 통신은 발생하지 않더라.
+         * 3. ajax는 기본적으로 비동기적으로 처리하기 때문에 블로킹이 발생하지 않는다.
+         * 
+         * 비동기 처리 : 특정 태스트가 처리중일때도, 다음 태스크를 처리하는 방식 (논 블로킹)
+         * 동기 처리 : 특정 태스크가 처리중일때 블로킹이 발생하여 태스크가 처리될때 까지 대기 후 처리가 완료되면 다음 태스크를 처리함.
+         * 
+         * JSON : 클라이언트와 서버간 HTTP통신할때 데이터를 전달하는 포맷임.
+         * 자바스크립트 뿐만 아니라 타 언어에서도 사용 가능함.
+         * 
+         * JSON표기 방식은 객체 리터럴 방식과 상당히 유사하더라...
+         * KEY과 VALUE로 구성됨
+         * JSON의 KEY는 반드시 Double Quatos를 이용하자. ( "key" : value )
+        */
+    </script>
+</head>
+<body>
+    <script>
+        const obj = {
+            name : 'Lee',
+            age : 30,
+            alive : true,
+            hobby : ['fishing', 'traveling']
+        };
+
+        // JSON.stringify(object) 자바스크립트 객체를 JSON 문자열 포맷으로 변환.
+        // console.log(JSON.stringify(obj));
+
+        // const stringJson = JSON.stringify(obj);
+
+        // JSON 문자열 형태를 들여쓰기 한다.
+        // JSON.stringify(target, replacer: (key, value), indent[number])
+        // console.log(JSON.stringify(obj, null, 2));
+
+        const filter = (key, value) => {
+            // return 값이 undefined이면 반환하지 않음
+            // value가 number타입이면 필터링함.
+            return typeof value === 'number' ? undefined : value;
+        }
+
+        const strFilteredObjectc = JSON.stringify(obj, filter, 4);
+        console.log(strFilteredObjectc);
+
+        // JSON.parse(target) : JSON 문자열 포맷을 객체로 변환한다.
+        console.log(JSON.parse(strFilteredObjectc));
+    </script>
+</body>
+</html>

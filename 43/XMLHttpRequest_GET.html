@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <style>
+        table {
+            width: 600px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th {
+            border: 1px solid black;
+        }
+
+        td {
+            border: 1px solid black;
+        }
+    </style>
+    <body>
+        <table>
+            <caption>
+                테스트
+            </caption>
+            <colgroup>
+                <col width="10%" />
+                <col width="50%" />
+                <col width="20%" />
+                <col width="20%" />
+            </colgroup>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Writer</th>
+                <th>Publish</th>
+            </tr>
+        </table>
+        <script>
+            /*
+                XMLHttpRequest
+                - WEB API로 비동기 처리시 사용되는 API(메서드, 프로퍼티)를 제공함.
+                - 생성자 함수를 호출 인스턴스를 생성하여 비동기 기능을 처리한다.
+            */
+
+            // XMLHttpRequest 생성자 함수 호출하여 인스턴스 생성
+            const xhr = new XMLHttpRequest();
+
+            // XMLHttpRequest 요청 초기화
+            // xhr.open(method, url);
+            /*
+                method
+                1. GET : 데이터 조회시
+                2. POST : 데이터 추가 데이터 전송시 JSON 문자열로 전달해야..
+                3. PULL : 데이터 전체 변경
+                4. PATCH : 데이터 일부 변경
+                5. DELETE : 데이터 삭제
+            */
+            xhr.open("GET", "http://localhost:3001/books"); // HTTP 요청을 초기화
+
+            xhr.send(); // HTTP 요청을 서버에 전송함.
+
+            xhr.onreadystatechange = function () {
+                try {
+                    const {
+                        readyState, // HTTP 요청 현재 상태 (0 ~ 4)
+                        status, // HTTP 응답 상태
+                        response, // HTTP 요청에 대한 Body(데이터)
+                        statusText, // HTTP 응답 상태 메시지
+                    } = xhr;
+                    let isDone = false;
+
+                    if (readyState === 0) {
+                        // console.log("OPEN(HTTP 요청 초기화전)");
+                    } else if (readyState === 1) {
+                        // console.log("OPEN(HTTP 요청 초기화후)");
+                    } else if (readyState === 2) {
+                        // console.log("HTTP 요청 전달");
+                    } else if (readyState === 3) {
+                        // console.log("HTTP 응답 대기 중");
+                    } else if (readyState === 4) {
+                        isDone = true;
+                    } else {
+                        throw new Error("HTTP 요청 오류");
+                    }
+
+                    if (isDone) {
+                        const jsonDatas = JSON.parse(xhr.response);
+
+                        const fragmentDocument =
+                            document.createDocumentFragment();
+                        // 단일 데이터일때...
+                        if (!Array.isArray(jsonDatas)) {
+                            const $tr = document.createElement("tr");
+                            createNode(jsonDatas, $tr);
+                            fragmentDocument.appendChild($tr);
+                        } else {
+                            // 여러 데이터일때
+                            for (const data of jsonDatas) {
+                                const $tr = document.createElement("tr");
+                                createNode(data, $tr);
+                                fragmentDocument.appendChild($tr);
+                            }
+                        }
+
+                        const $table = document.querySelector("table");
+
+                        $table.appendChild(fragmentDocument);
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            };
+
+            const createNode = (data, $tr) => {
+                for (const key in data) {
+                    const $td = document.createElement("td");
+                    $td.textContent = data[key];
+                    $tr.appendChild($td);
+                }
+            };
+            /*
+                    json-server 설치
+                    npm i -g json-server
+
+                    디렉터리 및 파일 생성
+                    mkdir server
+                    touch db.json
+
+                    json-server 실행
+                    json-server --watch ./server/db.json --port 3001
+                */
+        </script>
+    </body>
+</html>

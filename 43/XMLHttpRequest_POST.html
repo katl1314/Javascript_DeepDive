@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // HTTP통신을 위한 XMLHttpRequest 인스턴스 생성
+            /* const xhr = new XMLHttpRequest();
+
+            // HTTP 요청 헤더 설정
+            // 서버에 전송할 데이터는 json으로 보낸다.
+
+            xhr.open("PUT", "http://localhost:3001/books/1");
+
+            xhr.setRequestHeader("content-type", "application/json");
+
+            var sendData = {
+                title: "야구의 정석",
+                writer: "김성근",
+                publish: "야구학",
+            };
+
+            xhr.send(JSON.stringify(sendData)); */
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open("GET", "");
+
+            // XMLHttpRequest.prototype.setRequestHeader(name, value)
+            // HTTP 응답의 헤더값을 설정함
+            // 보통은 서버에 전달하는 데이터의 MIME타입을 지정할 때 사용하며
+            // name은 content-type value application/json을 설정하면 서버에 JSON데이터를 전달한다 라는 의미
+            // open메서드 호출 후 setRequestHeader메서드를 사용해야함.
+            // 다양한 MIME값이 있으니 참고할것
+            xhr.setRequestHeader("content-type", "application/json");
+        </script>
+    </body>
+</html>

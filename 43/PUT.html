@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <form name="myForm" action="post">
+            <input type="text" id="title" />
+            <input type="text" id="writer" />
+            <input type="text" id="publisher" />
+            <input type="submit" value="전송" />
+        </form>
+
+        <script>
+            /*
+                HTTP 요청 메서드 중 POST는 서버에 데이터를 추가하기 위한 목적으로 사용됨.
+                open메서드의 첫번째 인자로 POST, 두번째 인자로 리소스 URI을 사용한다.
+                GET처럼 단순 데이터 조회용이 아니기 때문에 페이로드(서버에 전달하는 데이터)가 필요함.
+            */
+            document.querySelector("form").onsubmit = function () {
+                // var xhr = new XMLHttpRequest();
+                const { title, writer, publisher } = window.myForm; // form내 데이터 추출
+                const data = {
+                    title: title.value,
+                    writer: writer.value,
+                    publisher: publisher.value,
+                };
+
+                const xhr = new XMLHttpRequest();
+
+                xhr.open("PUT", "http://localhost:3001/books/4"); // HTTP 요청 초기화
+
+                xhr.setRequestHeader("content-type", "application/json"); // 서버에 전달하는 데이터(페이로드)의 MIME타입을 정의
+
+                xhr.send(JSON.stringify(data)); // HTTP 요청 전달 (페이로드를 MESSAGE BODY에 전달하여 해당 ID의 데이터를 모두 교체)
+
+                xhr.onload = function () {
+                    if (xhr.readyState === xhr.DONE) {
+                        if (xhr.status === 201 || xhr.status === 200) {
+                            console.log(xhr.response); // 서버에 추가한 데이터를 출력함.
+                        } else {
+                            console.error(`${xhr.stauts} : ${xhr.statusText}`);
+                        }
+                    }
+                };
+                return false;
+            };
+        </script>
+    </body>
+</html>

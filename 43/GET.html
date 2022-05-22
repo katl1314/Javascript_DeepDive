@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /*
+                44. REST API
+                1. REST란? HTTP통신에서 클라이언트가 서버의 리소스를 접근하는 방식에 대해 규정한 것
+                2. REST FUL : REST의 기본 원칙을 잘 준수한 서비스 디자인 아키텍처
+                3. RestFul API(Application Programming Interface) : 리소스(Resource), 행위(Verb), 표현(Represation) 3가지 요소로 구성
+                이를 통해 REST API를 통해 http요청의 내용을 이해한다.
+
+                리소스 : 서버 내 리소스 URI으로, 해당 내용에는 http 요청 메서드는 포함되어서는 안됨
+                행위(Verb) : HTTP요청에 대한 메서드를 의미함. GET, POST, PUT, PATCH, DELETE 총 5개로 구성됨.
+                    GET : 서버 내 리소스를 조회하는 목적 또는 일부를 조회함.(Unique한 key인 id를 이용) => 서버에 전달하는 페이로드가 필요없음
+                    POST : 서버 에 새로운 데이터를 추가하는 목적 => 서버에 전달하는 페이로드가 반드시 필요(json 문자열 포맷)
+                    PUT : 서버내 데이터 전체를 변경하는 목적
+                    PATCH : 서버내 데이터의 일부 값을 변경함
+                    DELETE : 서버내 데이터를 삭제하기 위한 메서드
+                
+                실습을 위해 JSON-SERVER를 설치하자.
+                설치 npm install -g json-server
+
+                실행 json-server --watch './url.json' --port 3001(default port 3000)
+            */
+
+            // GET 요청 /books내 모든 리소스를 조회해보자.
+            // XMLHttpRequest 인스턴스 생성
+            var xhr = new XMLHttpRequest();
+
+            // HTTP 요청 초기화 (setRequestHeader는 open호출 후 사용함.)
+            // readyState의 upset(0), 1
+            // 서버의 전체 데이터가 아닌 일부 데이터를 조회할 경우 id를 이용하여 특정 데이터를 얻을 수 있음.
+            // xhr.open("GET", "http://localhost:3001/books/1");
+            xhr.open("GET", "http://localhost:3001/books/");
+
+            // HTTP 요청 전달 onreadystatechange이벤트의 XMLHttpRequest인스턴스의 프로퍼티
+            // readyState가 4, status(HTTP 요청 상태)가 200일때 정상적으로 동작함.
+            xhr.send(); // POST, PUT처럼 서버에 데이터를 전송시 send메서드의 인자로 JSON문자열 포맷을 전달한다.
+
+            xhr.onreadystatechange = function (e) {
+                try {
+                    const { readyState, status, statusText, response } = xhr;
+                    if (readyState === xhr.DONE) {
+                        if (status === 200) {
+                            // console.log(JSON.parse(response));
+                            const pre = document.createElement("pre");
+                            pre.textContent = response;
+                            document.querySelector("body").append(pre);
+                        } else {
+                            throw new Error(`${status} : ${statusText}`);
+                        }
+                    } else {
+                        console.info(readyState);
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            };
+        </script>
+    </body>
+</html>
