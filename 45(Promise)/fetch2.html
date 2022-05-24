@@ -1,0 +1,29 @@
+<script>
+    const wrongUrl = "https://jsonplaceholder.typicode.com/todos/1";
+    // fetch함수를 호출시 기본적으로 Response객체를 resolve한 Promise를 반환함.
+    // 그래서 후속 메서드 then 또는 catch를 사용할 수 있다.
+    fetch(wrongUrl)
+        .then((response) => {
+            /*
+                fetch함수는 부적절한 URL을 전달받아도 error를 reject하지 않고, 불리언 타입의 ok상태를
+                false로 설정된 Response객체를 resolve함.
+                만약 cors에러에 의해 요청완료되지 않으면, 프로미스를 reject한다.
+
+                그래서 Response객체의 ok을 통해 false인 경우 예외처리를 해야함.
+
+                Promise의 후속 메서드 catch는 에러 처리 및 에러를 reject시 호출함.
+
+                다만 axios
+            */
+            if (response.ok != true) {
+                // Response객체의 ok가 false이면 에러 강제 발생.
+                throw new Error(`${response.status}`);
+            }
+            return response.json();
+        })
+        .then(({ completed, id, title, userId }) =>
+            // 비동기 처리시 외부에 반환할 수 없기 때문에 반드시 callback 또는 후속 메서드에서 처리할것
+            console.log(completed, id, title, userId)
+        )
+        .catch((err) => console.error(err));
+</script>

@@ -1,0 +1,83 @@
+<script>
+    const request = {
+        get(url) {
+            return fetch(url);
+        },
+        post(url, payload) {
+            return fetch(url, {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+        },
+        patch(url, payload) {
+            return fetch(url, {
+                method: "PATCH",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+        },
+        delete(url) {
+            return fetch(url, {
+                method: "DELETE",
+            });
+        },
+    };
+
+    const url = "http://localhost:3001/books";
+    /*
+    const getPromise = request.get(`${url}`);
+    getPromise
+        .then((response) => {
+            // HTTP 요청 후 정상적으로 응답되었을 때 true
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then((d) => console.log(d))
+        .catch((err) => console.error(err));
+
+    const postPromise = request.post(url, {
+        title: "자바의 정석",
+        writer: "이응",
+        publish: "오랜지미디어",
+    });
+
+    console.dir(postPromise); // Promise 상태가 fulfilled(resolve)된 프로미스 객체 반환
+    postPromise
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then((d) => console.log(d))
+        .catch((err) => console.error(err));
+
+    getPromise
+        .then((response) => {
+            // HTTP 요청 후 정상적으로 응답되었을 때 true
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then((d) => console.log(d))
+        .catch((err) => console.error(err));
+    */
+
+    /* request
+        .patch(`${url}/6`, {
+            title: "EBS 수능특강",
+        })
+        .then((response) => response.json())
+        .then((d) => console.log(d))
+        .catch((e) => console.error(e)); */
+
+    request
+        .delete(`${url}/6`)
+        .then((response) => response.json())
+        .then((d) => console.log(d))
+        .catch((e) => console.error(e));
+</script>

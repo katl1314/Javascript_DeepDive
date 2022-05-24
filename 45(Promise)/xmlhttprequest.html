@@ -1,0 +1,37 @@
+<script>
+    /**
+     * @author 최민혁
+     * @description 비동기 프로그래밍의 콜백과 프로미스의 차이를 이해한다.
+     */
+
+    // 과거에는 비동기 프로그래밍을 구현할 때 콜백함수를 통해 결과를 처리하였다.
+    // 근데 콜백함수를 사용할 경우 콜백 지옥이 발생시 가독성이 떨어지고, 에러 처리에 대한 부분도 어려워짐.
+    // 여러 개의 비동기 처리를 한번에 하는데도 많은 어려움이 있음.
+
+    // 이번에 진행할 Promise는 ES6에서 처음 도입되었음. 콜백 지옥같은 기존 문제를 해결 수단.
+
+    // 콜백 지옥을 구현해보자.
+
+    const get = (url, id = "") => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `${url}/${id}`);
+        xhr.send();
+
+        xhr.onload = () => {
+            // HTTP 응답 상태가 200이면 정상 처리
+            if (xhr.status === 200 || xhr.staus === 201) {
+                console.log(JSON.parse(xhr.response));
+            } else {
+                console.error(`${xhr.status} : ${xhr.statusText}`);
+            }
+        };
+    };
+
+    get("https://jsonplaceholder.typicode.com/posts", "1");
+
+    /*
+        비동기 함수 : 비동기적으로 처리하는 로직을 포함하는 함수
+        비동기 함수 호출시 함수 내부의 비동기처리 로직이 완료되지 않더라고, 비동기 함수를 종료,
+        비동기 처리 로직은 비동기 함수가 종료되면 즉시 실행함. ===> 태스크 큐와 콜스택의 이벤트 루프 이해
+    */
+</script>

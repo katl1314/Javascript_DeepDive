@@ -1,0 +1,90 @@
+<script>
+    const get = (url, successCallback, failCallback) => {
+        const xhr = new XMLHttpRequest();
+
+        // http 요청 초기화
+        xhr.open("GET", url);
+
+        // http 요청 전송
+        xhr.send();
+        /*
+            onload이벤트는 기본적으로 비동기 함수임.
+            onload이벤트를 먼저 등록 후 undefined를 반환함.
+            onload이벤트의 이벤트 핸들러는 비동기 함수인 get이 모두 실행이 종료될때까지 실행하지 않음.
+            그래서 onload이벤트 핸들러의 반환값을 캐치가 불가능.
+
+            xhr.onload의 이벤트 핸들러도 함수임
+            이벤트 핸들러는 기본적으로 태스크 큐에 임시적으로 저장함.
+            이벤트 루프는 태스크 큐와 콜 스택을 체크하고 콜 스택이 비어있을때 태스크 큐의 함수를 콜 스택에 추가하는 역할을 하기 때문에
+            실행함.
+
+            비동기 함수는 절대절대절대 반환을 할 수 없음.
+            또는 상위 스코프의 변수를 참조할 수 없음.
+            후속처리는 반드시 비동기 함수 내부에서 처리해야함
+        */
+        // onload 이벤트 바인딩
+        // onload 이벤트 후속 처리를 콜백함수를 전달하여 실행한다.
+        // 다만 이처럼 계속 콜백 함수로 처리하게 될경우 콜백 지옥으로 가독성이 떨어지게 됨.
+        // 유지보수에 어려움.
+        xhr.onload = () => {
+            const { status, response, statusText } = xhr;
+            if (status === 200 || status === 201) {
+                // return JSON.parse(response);
+                successCallback(xhr);
+            } else {
+                failCallback(status, statusText);
+            }
+        };
+
+        // get함수의 반환문이 없으므로, 암묵적으로 undefined를 반환함.
+    };
+
+    const successCallback = ({ response }) => {
+        console.log(response);
+        // 콜백 함수 호출이 중첩될 경우 가독성이 떨어짐(콜백 지옥)
+        // 더 심각한 부분은 콜백함수의 경우 try-catch를 통해 예외 처리가 불가능함.
+        get(
+            "https://jsonplaceholder.typicode.com/posts/2",
+            ({ response }) => {
+                console.log("두번째 콜백 :", response);
+                get(
+                    "https://jsonplaceholder.typicode.com/posts/3",
+                    ({ response }) => {
+                        console.log("세번째 콜백 :", response);
+                        get(
+                            "https://jsonplaceholder.typicode.com/posts/5",
+                            ({ response }) => {
+                                console.log("네번째 콜백 :", response);
+                            },
+                            (status, statusText) => {
+                                console.error(
+                                    `네번째 콜백 : ${status} : ${statusText}`
+                                );
+                            }
+                        );
+                    },
+                    (status, statusText) => {
+                        console.error(
+                            `세번째 콜백 : ${status} : ${statusText}`
+                        );
+                    }
+                );
+            },
+            (status, statusText) => {
+                console.error(`두번째 콜백 : ${status} : ${statusText}`);
+            }
+        );
+    };
+
+    const failCallback = (status, statusText) => {
+        console.error(`${status} : ${statusText}`);
+    };
+
+    // console.log(get("https://jsonplaceholder.typicode.com/posts/1")); // xhr객체의 onload이벤트 핸들러는 외부에 반환 및 상위 스코프의 변수에 참조가 불가능
+
+    get(
+        "https://jsonplaceholder.typicode.com/posts/1",
+        successCallback,
+        failCallback
+    );
+</script>

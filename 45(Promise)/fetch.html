@@ -1,0 +1,37 @@
+<script>
+    /*
+        fetch는 최근에 추가된 Web API로, XMLHttpRequest객체보다 간편하고, 프로미스를 지원
+        모던 브라우저에서 지원됨
+
+        fetch함수는 url과 다양한 옵션(페이로드 관련 body, 인코딩, 요청 헤더, 요청 메서드 등)를 지정함.
+        fetch(url, [, options]) => Promise객체를 반환하므로, then catch, finally 후속 메서드로 처리한다.
+    */
+
+    const fetchPromise = fetch("https://api.github.com/users2/1", {
+        method: "GET",
+        headers: { "content-type": "application/json" },
+    });
+    console.log(fetchPromise); // Promise객체 반환 (fulfilled)
+    fetchPromise
+        .then((response) => {
+            /*fetch는 기본적으로 status가 404든 200든 무조건 resolve를 처리하기 때문에
+            response.ok를 통해 false시 에러를 처리해야함.*/
+            if (!response.ok) {
+                throw new Error("1111");
+            }
+            return response.json();
+        })
+        .then((d) => console.log(d));
+    // .catch((err) => console.error);
+
+    /*
+        자바스크립트는 비동기 처리를 위한 하나의 패턴으로 콜백함수를 사용하는데, 콜백함수를 중첩적으로 사용시 콜백 지옥이 발생하여 가독성이 떠러지고, 여러 개의 비동기 처리를 한번에 처리에도
+        한계가 있음.
+
+        동기식 처리 모델 : 직렬적으로 태스크를 수행. 태스크는 순차적으로 실행. 어떠한 작업이 진행중이면 다음 태스크는 대기함.(블로킹)
+
+        비동기 처리 모델 : 병렬적으로 태스크를 수행하며, 특정 태스크가 진행중일때, 다음 태스크를 진행시키는 방식임. (블로킹이 발생하지 않음.)
+
+        전통적인 비동기 처리는 콜백 함수를 통해서 처리하였고, ES6부터 프로미스가 추가됨. => 모던 브라우저 모두 지원
+    */
+</script>
