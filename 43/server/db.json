@@ -23,6 +23,12 @@
       "writer": "최민혁",
       "publisher": "ㅇㅇㅇㅇ",
       "id": 4
+    },
+    {
+      "title": "자바의 정석",
+      "writer": "이응",
+      "publish": "오랜지미디어",
+      "id": 5
     }
   ]
 }
