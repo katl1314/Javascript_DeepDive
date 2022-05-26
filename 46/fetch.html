@@ -1,0 +1,32 @@
+<script>
+    
+    /**
+     * 파라미터 pid, lon(위도), lat(경도)
+     */
+    const getLocaleWeather = function(pid) {
+        return function (...args) {
+            if (args.length < 2) {
+                throw new Error("함수의 인자가 2개가 아닙니다.");
+            }
+    
+            const [lon, lat] = args;
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lon}&lon=${lat}&appid=${pid}`;
+            console.log(url);
+            return fetch(url);
+        }
+    }
+
+    const myWeatherFunc =  getLocaleWeather("a08af969c76dc6a3daca065139a534c2");
+    myWeatherFunc(37.5666805, 126.9784147)
+        .then(response => {
+            if (!response.ok) {
+                // fetch함수는 cors에러를 제외하고 resolve한 프로미스 객체를 반환
+                // 하기 때문에 강제적으로 예외처리를 발생시켜야함.
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(d => console.log(d))
+        .catch(err => console.error("api 에러", err));
+        
+</script>
